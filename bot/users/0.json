@@ -1,0 +1,20 @@
+{
+  "points": 168,
+  "currency": 500,
+  "message_count": 5,
+  "model_count": 0,
+  "nubox": 3,
+  "message_currency_count": 5,
+  "message_nubox_count": 5,
+  "message_item_count": 5,
+  "shop_items_sold": 0,
+  "inventory": {},
+  "contests_won": 0,
+  "user_creations": [],
+  "discord": {
+    "name": "Jayson.json"
+  },
+  "minecraft": {
+    "uuid": ""
+  }
+}

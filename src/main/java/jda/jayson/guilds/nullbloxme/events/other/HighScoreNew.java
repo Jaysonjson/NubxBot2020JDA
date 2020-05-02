@@ -54,7 +54,7 @@ public class HighScoreNew {
         sorted.clear();
         User user = e.getAuthor();
         Long user_id = user.getIdLong();
-        DiscordUser discordUser = JSON.loadUser(String.valueOf(user_id));
+        DiscordUser discordUser = JSON.loadUser(user_id);
         List<File> files = (List<File>) FileUtils.listFiles(new File("bot/users"), new String[]{"json"}, true);
         for (File file : files) {
             String filename = file.getName();
@@ -63,29 +63,27 @@ public class HighScoreNew {
             try {
                 user_name = e.getGuild().getMemberById(filename).getUser().getName();
             } catch (Exception e1) {
-                user_name = (String) discordUser.discord.get("name");
+                user_name = (String) discordUser.discord.name;
             }
             String content = null;
             try {
                 content = FileUtils.readFileToString(file, "utf-8");
             } catch (IOException ec) {
-                References.inventory.clear();
+                discordUser.inventory.clear();
                 Nubx.logger_json.error(ec);
                 ec.printStackTrace();
             }
-            JSONObject json = new JSONObject(content);
-            References.points = json.getInt("points");
-            if(References.points != 0 && !filename.equalsIgnoreCase("" + Users.Jayson_json) && !filename.equals("" + Users.Keksefreak) && !filename.equals("" + Users.Jayson_Alt) && !filename.equals("" + Users.Jayson_Alt1) && !filename.equals("" + Users.Test_Bot) && !filename.equals("" + Users.Nubx)) {
+            if(discordUser.points != 0 && !filename.equalsIgnoreCase("" + Users.Jayson_json) && !filename.equals("" + Users.Keksefreak) && !filename.equals("" + Users.Jayson_Alt) && !filename.equals("" + Users.Jayson_Alt1) && !filename.equals("" + Users.Test_Bot) && !filename.equals("" + Users.Nubx)) {
                 if (remover.containsKey(user)) {
                     points.remove(remover.get(user));
                     sorted.remove(remover.get(user));
                 }
-                remover.put(user, References.points);
-                points.put(References.points, user);
-                sorted.add(References.points);
+                remover.put(user_name, discordUser.points);
+                points.put(discordUser.points, user_name);
+                sorted.add(discordUser.points);
             }
             if(filename.equals("" + Users.Jayson_json) || filename.equals("" + Users.Keksefreak) || filename.equals("" + Users.Jayson_Alt) || filename.equals("" + Users.Jayson_Alt1) || filename.equals("" + Users.Test_Bot) || filename.equals("" + Users.Nubx)) {
-                special.put(user,References.points);
+                special.put(user_name,discordUser.points);
             }
         }
         //BotCMD.save();
@@ -96,12 +94,12 @@ public class HighScoreNew {
         for (int i = 1; i < sorted.size(); i++) {
             num++;
             String p = points.get(sorted.get(i));
-            String user = "nullpointer_catch";
+            String user_name = "nullpointer_catch";
             try {
-                user = p;
+                user_name = p;
             } catch (NullPointerException e1) {
             }
-            if (user != null && !user.equalsIgnoreCase("nullpointer_catch")) {
+            if (user_name != null && !user_name.equalsIgnoreCase("nullpointer_catch")) {
                 s.append("\n").append(num).append(": (").append(References.formatInteger(sorted.get(i))).append(")  ").append(user);
             }
             if (i == 26) {

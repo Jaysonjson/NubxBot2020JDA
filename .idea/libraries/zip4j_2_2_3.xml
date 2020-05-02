@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="zip4j-2.2.3">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/NubxBotGJDA/libs/zip4j-2.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/zip4j-2.2.3.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

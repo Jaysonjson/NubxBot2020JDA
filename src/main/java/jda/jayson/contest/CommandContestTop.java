@@ -1,6 +1,7 @@
 package jda.jayson.contest;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.Channels;
 import jda.jayson.id.References;
 import jda.jayson.id.Users;
@@ -19,9 +20,9 @@ public class CommandContestTop {
     public static ArrayList<Integer> sorted = new ArrayList<>();
     public static void onEvent(MessageReceivedEvent event) {
         if(event.getMessage().getContentRaw().contains("!contestwinner") && event.getMember().getIdLong() == Users.Jayson_json) {
-            JSON.load(event.getMessage().getContentRaw().split(" ")[1]);
-            References.contests_won++;
-            JSON.save(event.getMessage().getContentRaw().split(" ")[1]);
+            DiscordUser discordUser = JSON.loadUser(event.getMessage().getContentRaw().split(" ")[1]);
+            discordUser.contests_won++;
+            JSON.saveUser(discordUser);
         }
         if(event.getMessage().getContentRaw().equalsIgnoreCase("!contestinit")) {
             try {

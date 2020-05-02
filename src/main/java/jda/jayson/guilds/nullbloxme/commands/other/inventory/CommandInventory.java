@@ -1,6 +1,7 @@
 package jda.jayson.guilds.nullbloxme.commands.other.inventory;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -13,31 +14,31 @@ public class CommandInventory {
         String content = msg.getContentRaw();
         String argument[] = content.split(" ");
         if(content.contains("!inventory")) {
-            JSON.load(String.valueOf(event.getAuthor().getIdLong()));
+            DiscordUser discordUser = JSON.loadUser(event.getAuthor().getIdLong());
             EmbedBuilder builder = new EmbedBuilder();
             InventoryPageContainer pageContainer = new InventoryPageContainer();
             Integer p_i = 0;
             Integer page = 0;
             StringBuilder page_content = new StringBuilder();
             Integer current_page = 0;
-            Integer page_check = References.inventory.size();
+            Integer page_check = discordUser.inventory.size();
             if(argument.length == 1) {
                 current_page = 0;
             } else if (argument.length > 1){
                 current_page = Integer.parseInt(argument[1]) - 1;
             }
-            if(References.inventory.size() < 1) {
+            if(discordUser.inventory.size() < 1) {
                 event.getChannel().sendMessage("> You don't own any items!").complete();
                 return;
             }
             //SortedSet<InventoryItem> keys = new TreeSet<>(References.inventory.keySet());
-            for (InventoryItem inventoryItem : References.inventory.keySet()) {
-                if (!References.inventory.get(inventoryItem).equals(0)){
+            for (InventoryItem inventoryItem : discordUser.inventory.keySet()) {
+                if (!discordUser.inventory.get(inventoryItem).equals(0)){
                     p_i++;
                     if (p_i < 6) {
-                        page_content.append("**").append(inventoryItem.getEmoji()).append(" ").append(inventoryItem.getName()).append("**").append("\nAmount: `").append(References.formatInteger(References.inventory.get(inventoryItem))).append("` **--** B/S/T: `").append(inventoryItem.getPrice()).append("`,`").append(inventoryItem.getSellValue()).append("`,`").append(inventoryItem.getTransferValue()).append("` **--** Rarity: `").append(inventoryItem.getRarity()).append("` **--** ID: `").append(inventoryItem.getId()).append("`\n\n");
+                        page_content.append("**").append(inventoryItem.getEmoji()).append(" ").append(inventoryItem.getName()).append("**").append("\nAmount: `").append(References.formatInteger(discordUser.inventory.get(inventoryItem))).append("` **--** B/S/T: `").append(inventoryItem.getPrice()).append("`,`").append(inventoryItem.getSellValue()).append("`,`").append(inventoryItem.getTransferValue()).append("` **--** Rarity: `").append(inventoryItem.getRarity()).append("` **--** ID: `").append(inventoryItem.getId()).append("`\n\n");
                     }
-                    if (p_i > 4 || p_i.equals(References.inventory.size()) || p_i.equals(page_check)) {
+                    if (p_i > 4 || p_i.equals(discordUser.inventory.size()) || p_i.equals(page_check)) {
                         page++;
                         page_check -= 5;
                         pageContainer.addPage(new InventoryPage(page_content.toString(), page));

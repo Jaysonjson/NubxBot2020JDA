@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="NubxUtil">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/NubxBotGJDA/libs/NubxUtil.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/NubxUtil.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

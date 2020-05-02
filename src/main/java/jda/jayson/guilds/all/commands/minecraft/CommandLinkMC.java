@@ -1,6 +1,7 @@
 package jda.jayson.guilds.all.commands.minecraft;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -40,14 +41,14 @@ public class CommandLinkMC {
                     httpCon.addRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36");
                     Scanner s = new Scanner(httpCon.getInputStream(), "UTF-8");
                     t.cancel();
+                    DiscordUser discordUser = JSON.loadUser(e.getAuthor().getIdLong());
                     while (s.hasNextLine()) {
                         String line = s.nextLine();
                         String skin;
                         String skin_url;
-                        JSON.load(String.valueOf(e.getAuthor().getIdLong()));
                         if (line.contains("name=\"profile\" value=\"")) {
-                            References.minecraft_uuid = line.substring(line.indexOf("value=") + 7, line.indexOf(">") - 1);
-                            e.getChannel().sendMessage("> " + argument[2] + "\n > " + References.minecraft_uuid).complete();
+                            discordUser.minecraft.uuid = line.substring(line.indexOf("value=") + 7, line.indexOf(">") - 1);
+                            e.getChannel().sendMessage("> " + argument[2] + "\n > " + discordUser.minecraft.uuid).complete();
                             break;
                         }
                         if (line.contains("shortcut icon")) {
@@ -59,7 +60,7 @@ public class CommandLinkMC {
                         }
                     }
                     s.close();
-                    JSON.save(String.valueOf(e.getAuthor().getIdLong()));
+                    JSON.saveUser(discordUser);
                     t.cancel();
                 } catch (Exception exc) {
                     exc.printStackTrace();

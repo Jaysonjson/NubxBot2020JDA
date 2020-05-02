@@ -1,0 +1,7 @@
+22:00:21 [[1m[32mJSON[0m]: Error at writing JSON for Bot
+22:00:21 [[1m[32mJSON[0m]: [31mjava.nio.file.NoSuchFileException: bot/bot.json[0m
+22:00:21 [[1m[32mJSON[0m]: Created JSON for Bot
+22:00:21 [[1m[32mJSON[0m]: [31mjava.io.FileNotFoundException: File 'bot/bot.json' does not exist[0m
+22:00:22 [[1m[32mJSON[0m]: Error at writing JSON for ID contest
+22:00:22 [[1m[32mJSON[0m]: [31mjava.nio.file.NoSuchFileException: bot/contest/contest.json[0m
+Writing Log... (05_02_22_00_23_nubxutil.txt)

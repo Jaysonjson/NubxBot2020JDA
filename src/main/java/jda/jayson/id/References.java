@@ -1,5 +1,6 @@
 package jda.jayson.id;
 
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.guilds.nullbloxme.commands.other.inventory.InventoryItem;
 
 import java.util.*;
@@ -31,27 +32,26 @@ public class References {
     public static Integer shop_download_amount = 0;
     public static Integer shop_total_nubx_earned = 0;
 
-    public static HashMap<InventoryItem, Integer> inventory = new HashMap<>();
     public static ArrayList<Long> user_creations = new ArrayList<>();
 
-    public static void addInventoryItem(InventoryItem item, Integer amount) {
-        if(inventory.containsKey(item)) {
-            inventory.put(item,inventory.get(item) + amount);
+    public static void addInventoryItem(InventoryItem item, Integer amount, DiscordUser discordUser) {
+        if(discordUser.inventory.containsKey(item)) {
+            discordUser.inventory.put(item, discordUser.inventory.get(item) + amount);
         } else {
-            inventory.put(item,amount);
+            discordUser.inventory.put(item, amount);
         }
     }
-    public static void removeInventoryItem(InventoryItem item, Integer amount) {
-        if(inventory.containsKey(item)) {
-            inventory.put(item,inventory.get(item) - amount);
-            if(InventoryItemAmount(item) == 0) {
-                inventory.remove(item);
+    public static void removeInventoryItem(InventoryItem item, Integer amount, DiscordUser discordUser) {
+        if(discordUser.inventory.containsKey(item)) {
+            discordUser.inventory.put(item, discordUser.inventory.get(item) - amount);
+            if(InventoryItemAmount(item, discordUser) == 0) {
+                discordUser.inventory.remove(item);
             }
         }
     }
-    public static Integer InventoryItemAmount(InventoryItem item) {
-        if(inventory.containsKey(item)) {
-            return inventory.get(item);
+    public static Integer InventoryItemAmount(InventoryItem item, DiscordUser discordUser) {
+        if(discordUser.inventory.containsKey(item)) {
+            return discordUser.inventory.get(item);
         }
         return 0;
     }

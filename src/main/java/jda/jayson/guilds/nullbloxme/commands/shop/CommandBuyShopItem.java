@@ -2,6 +2,7 @@ package jda.jayson.guilds.nullbloxme.commands.shop;
 
 import jda.jayson.file.JSON;
 import jda.jayson.file.ShopJSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.Channels;
 import jda.jayson.id.Guilds;
 import jda.jayson.id.ID;
@@ -23,20 +24,20 @@ public class CommandBuyShopItem {
             String shop_item = argument[2];
             File item = new File("bot/shop/models/" + shop_item + ".zip");
             if (item.exists()) {
-                JSON.load(String.valueOf(user.getIdLong()));
+                DiscordUser discordUser = JSON.loadUser(user.getIdLong());
                 ShopJSON.load(shop_item);
-                if(References.currency > References.shop_price || References.currency == References.shop_price) {
-                    References.currency -= References.shop_price;
+                if(discordUser.currency > References.shop_price || discordUser.currency == References.shop_price) {
+                    discordUser.currency -= References.shop_price;
                     Message msg_f = user.openPrivateChannel().complete().sendFile(item).complete();
                     event.getChannel().sendMessage("> Successfully bought " + shop_item + " for " + References.shop_price + " " + ID.currency + "! Check your PMs for the Files! Or click on the Jump URL! [" + msg_f.getJumpUrl() + "]").complete();
-                    JSON.save(String.valueOf(user.getIdLong()));
+                    JSON.saveUser(discordUser);
                     Member item_owner = event.getGuild().getMemberById(References.shop_owner);
-                    JSON.load(String.valueOf(item_owner.getIdLong()));
-                    References.currency += References.shop_price;
+                    DiscordUser itemOwnerDiscordUser = JSON.loadUser(item_owner.getIdLong());
+                    itemOwnerDiscordUser.currency += References.shop_price;
                     References.shop_download_amount++;
                     References.shop_total_nubx_earned += References.shop_price;
                     item_owner.getUser().openPrivateChannel().complete().sendMessage("> " + user.getAsMention() + " has bought " + shop_item + "! \nTotal Download Amount: " + References.shop_download_amount + "\nTotal " + ID.currency +" Earned: " + References.shop_total_nubx_earned).complete();
-                    JSON.save(String.valueOf(item_owner.getIdLong()));
+                    JSON.saveUser(itemOwnerDiscordUser);
                     ShopJSON.save(shop_item);
                 } else {
                     event.getChannel().sendMessage("> You don't have enough " + ID.currency + " to buy that!").complete();

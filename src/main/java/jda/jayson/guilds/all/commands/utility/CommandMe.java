@@ -1,6 +1,7 @@
 package jda.jayson.guilds.all.commands.utility;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -37,22 +38,22 @@ public class CommandMe {
                     return;
                 }
             }
-            JSON.load(String.valueOf(user.getIdLong()));
+            DiscordUser discordUser = JSON.loadUser(user.getIdLong());
             EmbedBuilder builder = new EmbedBuilder();
             builder.setTitle(user.getName() + "'s Informations");
             builder.addField("\uD83C\uDFF7️ Name",user.getAsMention(),true);
-            builder.addField("<:nubx:363393495186145280> " + ID.currency, References.formatInteger(References.currency),true);
-            builder.addField("\uD83D\uDCE6 Nuboxes", References.formatInteger(References.nubox),true);
-            builder.addField("\uD83D\uDD8A ️Message Count", References.formatInteger(References.message_count),true);
-            builder.addField("<:cubik_element:362665520685907978> Model Count", String.valueOf(References.model_count),true);
-            builder.addField("\uD83D\uDED2 Shop Items Sold", References.formatInteger(References.shop_items_sold),true);
-            builder.addField("\uD83E\uDD47 Contests Won", String.valueOf(References.contests_won),true);
-            builder.addField("\uD83C\uDF7E Points", References.formatInteger(References.points),true);
+            builder.addField("<:nubx:363393495186145280> " + ID.currency, References.formatInteger(discordUser.currency),true);
+            builder.addField("\uD83D\uDCE6 Nuboxes", References.formatInteger(discordUser.nubox),true);
+            builder.addField("\uD83D\uDD8A ️Message Count", References.formatInteger(discordUser.message_count),true);
+            builder.addField("<:cubik_element:362665520685907978> Model Count", String.valueOf(discordUser.model_count),true);
+            builder.addField("\uD83D\uDED2 Shop Items Sold", References.formatInteger(discordUser.shop_items_sold),true);
+            builder.addField("\uD83E\uDD47 Contests Won", String.valueOf(discordUser.contests_won),true);
+            builder.addField("\uD83C\uDF7E Points", References.formatInteger(discordUser.points),true);
             builder.addField("\uD83D\uDCC7 ID",  user.getId(),true);
             builder.setTimestamp(Instant.now());
             //builder.addBlankField(true);
-            if(!References.minecraft_uuid.equalsIgnoreCase("")) {
-                builder.addField("<:minecraft:643808914575458376> Minecraft UUID", References.minecraft_uuid, true);
+            if(!discordUser.minecraft.uuid.equalsIgnoreCase("")) {
+                builder.addField("<:minecraft:643808914575458376> Minecraft UUID", discordUser.minecraft.uuid, true);
             }
             if(!References.skin_url_sized.equalsIgnoreCase("")) {
                 builder.setImage(References.skin_url_sized);

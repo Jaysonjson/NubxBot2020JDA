@@ -1,6 +1,7 @@
 package jda.jayson.guilds.nullbloxme.commands.fun.TicTacToe;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -42,10 +43,10 @@ public class TicTacToeGame {
     private void win(MessageReceivedEvent event, String winner) {
         event.getChannel().sendMessage("> " + winner + " has Won!").complete();
         if(winner.equalsIgnoreCase("X")) {
-            JSON.load(String.valueOf(event.getAuthor().getIdLong()));
-            References.currency += 5;
+            DiscordUser discordUser = JSON.loadUser(event.getAuthor().getIdLong());
+            discordUser.currency += 5;
             event.getChannel().sendMessage("You have earned 5 " + ID.currency + "!").complete();
-            JSON.save(String.valueOf(event.getAuthor().getIdLong()));
+            JSON.saveUser(discordUser);
         }
         CommandTicTacToe.gameHashMap.remove(event.getAuthor().getIdLong());
     }

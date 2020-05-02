@@ -5,6 +5,7 @@ import com.moandjiezana.toml.Toml;
 import jda.jayson.Nubx;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -70,8 +71,8 @@ public class CommandPortfolio {
                     try {
                         builder.append("`").append(event.getGuild().getMemberById(id).getUser().getName()).append("` `[").append(id).append("]`");
                     } catch (Exception exc) {
-                        JSON.load(id);
-                        builder.append("`").append(References.discord_name).append("` [*").append(id).append("*]");
+                        DiscordUser discordUser = JSON.loadUser(id);
+                        builder.append("`").append(discordUser.discord.name).append("` [*").append(id).append("*]");
                     }
                 }
                 if(builder.length() > 1499) {

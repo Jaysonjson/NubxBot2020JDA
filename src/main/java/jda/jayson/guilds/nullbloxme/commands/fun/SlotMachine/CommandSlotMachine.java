@@ -4,6 +4,7 @@ import com.jayson.nubx.ANSI;
 import com.jayson.nubx.NubxUtil;
 import jda.jayson.command.Cooldown;
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.entities.Message;
@@ -25,8 +26,8 @@ public class CommandSlotMachine {
                 event.getChannel().sendMessage("> You're cooldowned! " + References.formatTime(cooldown.getRemainingTime())).complete();
             } else {
                 cooldown.start();
-                JSON.load(event.getAuthor().getId());
-                if (References.currency > 99) {
+                DiscordUser discordUser = JSON.loadUser(event.getAuthor().getIdLong());
+                if (discordUser.currency > 99) {
                     final SlotMachine[] slot0 = {SlotMachine.randomSlot()};
                     final SlotMachine[] slot1 = {SlotMachine.randomSlot()};
                     final SlotMachine[] slot2 = {SlotMachine.randomSlot()};
@@ -42,10 +43,10 @@ public class CommandSlotMachine {
                         if (i[0] > 7) {
                             if (slot0[0].equals(slot1[0]) && slot1[0].equals(slot2[0])) {
                                 event.getChannel().sendMessage("> You won " + slot0[0].getPrice() + ID.currency + "!").complete();
-                                References.currency += slot0[0].getPrice();
+                                discordUser.currency += slot0[0].getPrice();
                             } else {
                                 event.getChannel().sendMessage("> You lost 100 " + ID.currency + "!").complete();
-                                References.currency -= 100;
+                                discordUser.currency -= 100;
                             }
                             ses.shutdown();
                         }
@@ -54,7 +55,7 @@ public class CommandSlotMachine {
                     event.getChannel().sendMessage("> You don't have enough " + ID.currency + " to use the Slot Machine!").complete();
                     return;
                 }
-                JSON.save(event.getAuthor().getId());
+                JSON.saveUser(discordUser);
             }
         }
     }

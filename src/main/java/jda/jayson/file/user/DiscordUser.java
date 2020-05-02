@@ -1,5 +1,8 @@
 package jda.jayson.file.user;
 
+import com.google.gson.annotations.SerializedName;
+import jda.jayson.file.user.arrays.DiscordUserDiscordArray;
+import jda.jayson.file.user.arrays.DiscordUserMinecraftArray;
 import jda.jayson.guilds.nullbloxme.commands.other.inventory.InventoryItem;
 import jda.jayson.id.References;
 
@@ -19,18 +22,19 @@ public class DiscordUser {
     public HashMap<InventoryItem, Integer> inventory = new HashMap<>();
     public Integer contests_won = 0;
     public ArrayList<Long> user_creations = new ArrayList<>();
-    public HashMap<String, Object> minecraft = new HashMap<>();
-    public HashMap<String, Object> discord = new HashMap<>();
+    public DiscordUserDiscordArray discord = new DiscordUserDiscordArray();
+    public DiscordUserMinecraftArray minecraft = new DiscordUserMinecraftArray();
+    private transient Long longID = 0L;
+
+    public Long getLongID() {
+        return this.longID;
+    }
+
+    public void setLongID(Long longID) {
+        this.longID = longID;
+    }
 
     public DiscordUser() {
 
-    }
-
-    public String getDiscordArrayDCName() {
-        return discord.get("name").toString();
-    }
-
-    public void setDiscordArrayDCName(Object content) {
-        discord.put("name", content);
     }
 }

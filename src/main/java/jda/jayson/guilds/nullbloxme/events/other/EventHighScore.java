@@ -22,7 +22,7 @@ public class EventHighScore {
     public static void onEvent(MessageReceivedEvent e) {
         User user = e.getAuthor();
         Long user_id = user.getIdLong();
-        DiscordUser discordUser = JSON.loadUser(String.valueOf(user_id));
+        DiscordUser discordUser = JSON.loadUser(user_id);
         if(e.getMessage().getContentRaw().equalsIgnoreCase("!updatehighscore") && e.getGuild().getMembersWithRoles(e.getGuild().getRoleById(Roles.Staff)).contains(e.getMember())) {
             updateHighscore(e);
         }

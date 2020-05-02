@@ -1,6 +1,7 @@
 package jda.jayson.file;
 
 import jda.jayson.Nubx;
+import jda.jayson.file.bot.Bot;
 import jda.jayson.guilds.nullbloxme.events.other.EventHighScore;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
@@ -14,43 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BotCMD {
-    public static void save_old() {
-        new File("bot/").mkdirs();
-        try{
-            FileOutputStream saveFile = new FileOutputStream("bot/nullbloxme/bot.set");
-            ObjectOutputStream save = new ObjectOutputStream(saveFile);
-            save.writeObject(References.creation_player);
-            save.writeObject(References.creation_player_url);
-            save.writeObject(References.creationcount_showcase);
-            save.writeObject(EventHighScore.sorted);
-            save.writeObject(EventHighScore.remover);
-            save.writeObject(EventHighScore.points);
-            save.writeObject(ID.currency);
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-    }
 
-    public static void load_old() {
-        try {
-            FileInputStream saveFile = new FileInputStream("bot/nullbloxme/bot.set");
-            ObjectInputStream save = new ObjectInputStream(saveFile);
-            References.creation_player = (HashMap<Integer, Long>) save.readObject();
-            References.creation_player_url = (HashMap<Integer, String>) save.readObject();
-            References.creationcount_showcase = (Integer) save.readObject();
-            ID.currency = (String) save.readObject();
-            EventHighScore.sorted = (ArrayList<Integer>) save.readObject();
-            EventHighScore.remover = (HashMap<Long, Integer>) save.readObject();
-            EventHighScore.points = (HashMap<Integer, Long>) save.readObject();
-        } catch (Exception exc) {
-            exc.printStackTrace();
-            save();
-        }
-    }
     public static void load() {
         File file = new File("bot/bot.json");
         if (!file.exists()) {
-            load_old();
             save();
             Nubx.logger_json.print("Created JSON for Bot");
         }
@@ -58,7 +26,7 @@ public class BotCMD {
         try {
             content = FileUtils.readFileToString(file, "utf-8");
         } catch (IOException e) {
-            References.inventory.clear();
+            //References.inventory.clear();
             Nubx.logger_json.error(e);
             e.printStackTrace();
         }

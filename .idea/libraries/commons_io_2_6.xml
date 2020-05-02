@@ -1,7 +1,8 @@
 <component name="libraryTable">
   <library name="commons-io-2.6">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/NubxBotGJDA/libs/commons-io-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-io-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/json-20180813.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

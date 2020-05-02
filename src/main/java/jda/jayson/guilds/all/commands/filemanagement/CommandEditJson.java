@@ -45,7 +45,6 @@ public class CommandEditJson {
                 } else {
                     user = msg.getGuild().getMembersByName(argument[2], true).get(0);
                 }
-                JSON.load(String.valueOf(user.getIdLong()));
                 String c = null;
                 try {
                     c = FileUtils.readFileToString(new File("bot/users/" + user.getIdLong() + ".json"), "utf-8");

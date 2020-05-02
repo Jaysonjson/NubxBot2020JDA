@@ -1,6 +1,7 @@
 package jda.jayson.guilds.nullbloxme.commands.other.inventory;
 
 import jda.jayson.file.JSON;
+import jda.jayson.file.user.DiscordUser;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.entities.Message;
@@ -35,7 +36,7 @@ public class CommandInventoryItem {
 
         if (content.contains("!item")) {
             if(content.contains("buy") || content.contains("sell")) {
-                JSON.load(String.valueOf(event.getAuthor().getIdLong()));
+                DiscordUser discordUser = JSON.loadUser(event.getAuthor().getIdLong());
                     Integer amount = 1;
                     InventoryItem item;
                     if(argument.length > 3) {
@@ -44,26 +45,26 @@ public class CommandInventoryItem {
                     try {
                         item = InventoryItem.valueOf(argument[2].toUpperCase());
                         if(content.contains("buy")) {
-                            if (References.currency > item.getPrice() || References.currency == item.getPrice()) {
-                                References.currency -= item.getPrice() * amount;
-                                References.addInventoryItem(item, amount);
+                            if (discordUser.currency > item.getPrice() || discordUser.currency == item.getPrice()) {
+                                discordUser.currency -= item.getPrice() * amount;
+                                References.addInventoryItem(item, amount, discordUser);
                                 event.getChannel().sendMessage("> Bought " + amount + "x " + item.getEmoji() + " " + item.getName() + " for " + item.getPrice() * amount + "!").complete();
                             } else {
                                 event.getChannel().sendMessage("> You don't have enough " + ID.currency + " to buy " + item.getEmoji() + " " + item.getName() + "!").complete();
                             }
                         }
                         if(content.contains("sell")) {
-                            if(References.InventoryItemAmount(item) > amount || References.InventoryItemAmount(item) == amount) {
-                                References.currency += item.getSellValue() * amount;
-                                References.removeInventoryItem(item,amount);
+                            if(References.InventoryItemAmount(item, discordUser) > amount || References.InventoryItemAmount(item, discordUser) == amount) {
+                                discordUser.currency += item.getSellValue() * amount;
+                                References.removeInventoryItem(item, amount, discordUser);
                                 event.getChannel().sendMessage("> Sold " + amount + "x " + item.getEmoji() + " " + item.getName() + " for " + item.getSellValue() * amount + "!").complete();
                             }
                         }
                     } catch (Exception exc) {
                         event.getChannel().sendMessage("> Item `" + argument[2].toUpperCase() + "` not found!").complete();
                     }
+                    JSON.saveUser(discordUser);
                 }
-                JSON.save(String.valueOf(event.getAuthor().getIdLong()));
         }
     }
 }

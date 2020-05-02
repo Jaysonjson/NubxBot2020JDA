@@ -31,6 +31,10 @@ public class JSON {
         }
     }
 
+    public static void saveUser(DiscordUser discordUser) {
+        saveUser(String.valueOf(discordUser.getLongID()), discordUser);
+    }
+
     public static DiscordUser loadUser(String id) {
         Gson gson = new Gson();
         String content = "{}";
@@ -40,6 +44,12 @@ public class JSON {
         } catch (IOException ioexc) {
             Nubx.logger_json.print("Error at loading JSON for ID " + id);
         }
-            return new DiscordUser();
-        }
+        DiscordUser discordUser = new DiscordUser();
+        discordUser.setLongID(Long.valueOf(id));
+        return discordUser;
+    }
+
+    public static DiscordUser loadUser(Long id) {
+        return loadUser(String.valueOf(id));
+    }
 }
