@@ -1,0 +1,48 @@
+buildscript {
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
+    }
+}
+plugins {
+    id 'java'
+}
+apply plugin: 'java'
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'jda.jayson.Nubx'
+        )
+    }
+    // from { configurations.compile.collect{ it.isDirectory() ? it : zipTree(it) } }
+}
+
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+group 'Jaysonjson'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'net.dv8tion:JDA:4.0.0_56'
+    compile 'com.google.code.gson:gson:2.8.6'
+    compile 'com.moandjiezana.toml:toml4j:0.7.2'
+    compile 'com.sedmelluq:lavaplayer:1.3.23'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+repositories {
+    jcenter()
+}
+
+

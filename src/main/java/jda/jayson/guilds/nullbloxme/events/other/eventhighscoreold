@@ -1,0 +1,72 @@
+package jda.jayson.guilds.nullbloxme.events.other;
+
+import jda.jayson.id.References;
+import net.dv8tion.jda.api.entities.Invite;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.utils.MiscUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+public class EventHighScore {
+    public  static  boolean defined = false;
+    public static Long channel_Long = 0L;
+    public static Message highscoremsg_data = null;
+    public static HashMap<Integer, Long> points = new HashMap<>();
+    public static HashMap<Long,Integer> remover = new HashMap<>();
+    public static ArrayList<Integer> sorted = new ArrayList<>();
+
+    public static void onEvent(MessageReceivedEvent e) {
+
+        if(remover.containsKey(e.getAuthor().getIdLong())) {
+            points.remove(remover.get(e.getAuthor().getIdLong()));
+            sorted.remove(remover.get(e.getAuthor().getIdLong()));
+        }
+        remover.put(e.getAuthor().getIdLong(), References.points);
+        points.put(References.points, e.getAuthor().getIdLong());
+        sorted.add(References.points);
+        Collections.sort(sorted);
+        Collections.reverse(sorted);
+        try {
+            if(!defined) {
+                highscoremsg_data = e.getGuild().getTextChannelById(641041535894552607L).sendMessage("*waiting for data...*").complete();
+                channel_Long = highscoremsg_data.getIdLong();
+                defined = true;
+            }
+            ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+            ses.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String s = "1: (" + sorted.get(0) + ") " + e.getGuild().getMemberById(points.get(sorted.get(0))).getUser().getName();
+                        int num = 1;
+                        for (int i = 1; i < sorted.size(); i++) {
+                            num++;
+                            Long p = points.get(sorted.get(i));
+                            String user = e.getGuild().getMemberById(p).getUser().getName();
+                            if(user != null) {
+                                s += "\n" + num + ": (" + sorted.get(i) + ")  " + user;
+                            }
+                            if(i == 25) {
+                                break;
+                            }
+                        }
+                        highscoremsg_data.editMessage("```" + s + "```").complete();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }, 0, 30, TimeUnit.MINUTES);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            ex.getCause();
+            ex.getLocalizedMessage();
+        }
+    }
+}
