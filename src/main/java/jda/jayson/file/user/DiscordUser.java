@@ -15,8 +15,11 @@ public class DiscordUser {
     public Integer message_count = 0;
     public Integer model_count = 0;
     public Integer nubox = 3;
+    @SerializedName(value = "message_currency_count", alternate = "message_currency")
     public Integer message_currency_count = 0;
+    @SerializedName(value = "message_nubox_count", alternate = "message_nubox")
     public Integer message_nubox_count = 0;
+    @SerializedName(value = "message_item_count", alternate = "message_item")
     public Integer message_item_count = 0;
     public Integer shop_items_sold = 0;
     public HashMap<InventoryItem, Integer> inventory = new HashMap<>();

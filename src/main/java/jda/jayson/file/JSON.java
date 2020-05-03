@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 
 public class JSON {
 
+    @Deprecated
     public static void saveUser(String id, DiscordUser user) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(user);
@@ -40,11 +41,10 @@ public class JSON {
         String content = "{}";
         try {
             content = FileUtils.readFileToString(new File("bot/users/" + id + ".json"), "utf-8");
-            return gson.fromJson(content, DiscordUser.class);
         } catch (IOException ioexc) {
             Nubx.logger_json.print("Error at loading JSON for ID " + id);
         }
-        DiscordUser discordUser = new DiscordUser();
+        DiscordUser discordUser = gson.fromJson(content, DiscordUser.class);
         discordUser.setLongID(Long.valueOf(id));
         return discordUser;
     }

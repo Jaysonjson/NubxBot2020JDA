@@ -25,10 +25,12 @@ public class CommandOther {
                     builder.setColor(new Color(69, 65, 94));
                     msg.getChannel().sendMessage(builder.build()).complete();
             }
-        if(msg.getContentRaw().contains("say")) {
-            String joined = String.join(" ", argument);
-            joined = joined.substring(argument[0].length());
-            event.getChannel().sendMessage(joined).complete();
+        if(msg.getContentRaw().contains("!say")) {
+            if (argument[0].equalsIgnoreCase("!say")) {
+                String joined = String.join(" ", argument);
+                joined = joined.substring(argument[0].length());
+                event.getChannel().sendMessage(joined).complete();
+            }
         }
     }
 }
