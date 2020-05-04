@@ -1,9 +1,9 @@
 package jda.jayson.guilds.all.commands.utility;
 
+import jda.jayson.command.ignore.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class CommandOther {
         String[] argument = msg.getContentRaw().split(" ");
         if(msg.getContentRaw().equalsIgnoreCase("@someone")) {
             Random r = new Random();
-            Integer i = r.nextInt(event.getGuild().getMembers().size());
+            int i = r.nextInt(event.getGuild().getMembers().size());
                Member user = event.getGuild().getMembers().get(i);
                     EmbedBuilder builder = new EmbedBuilder();
                     builder.addField("Name",user.getUser().getName(),true);
