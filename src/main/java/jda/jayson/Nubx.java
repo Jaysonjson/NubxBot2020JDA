@@ -16,6 +16,7 @@ import jda.jayson.guilds.all.commands.other.CommandPortfolio;
 import jda.jayson.guilds.all.commands.utility.*;
 import jda.jayson.guilds.nubx3d.commands.CommandSkateBoard;
 import jda.jayson.guilds.nullbloxme.commands.fun.SlotMachine.CommandSlotMachine;
+import jda.jayson.guilds.nullbloxme.commands.other.CommandRole;
 import jda.jayson.guilds.nullbloxme.commands.other.inventory.*;
 import jda.jayson.guilds.nullbloxme.commands.fun.Fight.CommandFight;
 import jda.jayson.guilds.nullbloxme.commands.fun.TicTacToe.CommandTicTacToe;
@@ -74,7 +75,7 @@ public class Nubx extends ListenerAdapter
         if(!new File("bot/contest/contest.json").exists()) {
             ContestSave.save();
         }
-        new JDABuilder(ID.token_test)
+        new JDABuilder(ID.token)
                 .addEventListeners(new Nubx())
                 .setAutoReconnect(true)
                 .setActivity(Activity.playing(activity))
@@ -174,6 +175,7 @@ public class Nubx extends ListenerAdapter
         CommandInventoryItem.onEvent(event);
         CommandSlotMachine.onEvent(event);
         CommandPortfolio.onEvent(event);
+        CommandRole.onEvent(event);
          if(event.getGuild().getIdLong() == Guilds.Nullbloxme) {
              MessageRandom.onEvent(event);
             EventMessage.onEvent(event);
