@@ -17,6 +17,7 @@ import jda.jayson.guilds.all.commands.utility.*;
 import jda.jayson.guilds.nubx3d.commands.CommandSkateBoard;
 import jda.jayson.guilds.nullbloxme.commands.fun.SlotMachine.CommandSlotMachine;
 import jda.jayson.guilds.nullbloxme.commands.other.CommandRole;
+import jda.jayson.guilds.nullbloxme.commands.other.award.CommandAward;
 import jda.jayson.guilds.nullbloxme.commands.other.inventory.*;
 import jda.jayson.guilds.nullbloxme.commands.fun.Fight.CommandFight;
 import jda.jayson.guilds.nullbloxme.commands.fun.TicTacToe.CommandTicTacToe;
@@ -156,6 +157,7 @@ public class Nubx extends ListenerAdapter
             CommandSetCurrency.onEvent(event);
             CommandEditJson.onEvent(event);
             CommandWiki.onEvent(event);
+            CommandAward.onEvent(event);
             if(event.getGuild().getIdLong() == Guilds.Nullbloxme) {
                     CommandLog.onEvent(event);
                     CommandContestTop.onEvent(event);

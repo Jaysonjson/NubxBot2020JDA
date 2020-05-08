@@ -3,6 +3,7 @@ package jda.jayson.file.user;
 import com.google.gson.annotations.SerializedName;
 import jda.jayson.file.user.arrays.DiscordUserDiscordArray;
 import jda.jayson.file.user.arrays.DiscordUserMinecraftArray;
+import jda.jayson.guilds.nullbloxme.commands.other.award.Award;
 import jda.jayson.guilds.nullbloxme.commands.other.inventory.InventoryItem;
 import jda.jayson.id.References;
 
@@ -27,6 +28,7 @@ public class DiscordUser {
     public ArrayList<Long> user_creations = new ArrayList<>();
     public DiscordUserDiscordArray discord = new DiscordUserDiscordArray();
     public DiscordUserMinecraftArray minecraft = new DiscordUserMinecraftArray();
+    public ArrayList<Award> awards = new ArrayList<>();
     private transient Long longID = 0L;
 
     public Long getLongID() {

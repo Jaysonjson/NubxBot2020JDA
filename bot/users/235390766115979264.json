@@ -1,12 +1,12 @@
 {
-  "points": 171,
+  "points": 175,
   "currency": 500,
-  "message_count": 11,
+  "message_count": 20,
   "model_count": 0,
   "nubox": 153434,
-  "message_currency_count": 11,
-  "message_nubox_count": 11,
-  "message_item_count": 11,
+  "message_currency_count": 20,
+  "message_nubox_count": 20,
+  "message_item_count": 20,
   "shop_items_sold": 0,
   "inventory": {},
   "contests_won": 0,
@@ -16,5 +16,8 @@
   },
   "minecraft": {
     "uuid": ""
-  }
+  },
+  "awards": [
+    "JAYSON_CONTEST"
+  ]
 }

@@ -44,7 +44,7 @@ public class ArrayCommand {
         ArrayCommand.staff.add("!updatehighscore_new");
         ArrayCommand.staff.add("!DOLLARTOEURO");
         ArrayCommand.staff.add("!" + ID.currency.toLowerCase() + " set (user) (amount))");
-
+        ArrayCommand.staff.add("!award add (user) (award id)");
         ArrayCommand.fun.add("!tictactoe bot");
         ArrayCommand.fun.add("!tictactoe (player)");
         ArrayCommand.fun.add("@someone");

@@ -2,6 +2,7 @@ package jda.jayson.guilds.all.commands.utility;
 
 import jda.jayson.file.JSON;
 import jda.jayson.file.user.DiscordUser;
+import jda.jayson.guilds.nullbloxme.commands.other.award.Award;
 import jda.jayson.id.ID;
 import jda.jayson.id.References;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -26,7 +27,7 @@ public class CommandMe {
         Message msg = event.getMessage();
         String content = msg.getContentRaw();
         String argument[] = content.split(" ");
-        if(content.contains("!me")) {
+        if(argument[0].equalsIgnoreCase("!me")) {
             User user = event.getAuthor();
             if(msg.getMentionedMembers().size() > 0 && msg.getMentionedMembers().size() != 0) {
                 user = msg.getMentionedMembers().get(0).getUser();
@@ -50,6 +51,13 @@ public class CommandMe {
             builder.addField("\uD83E\uDD47 Contests Won", String.valueOf(discordUser.contests_won),true);
             builder.addField("\uD83C\uDF7E Points", References.formatInteger(discordUser.points),true);
             builder.addField("\uD83D\uDCC7 ID",  user.getId(),true);
+            String awards = "";
+            for (Award award : discordUser.awards) {
+                awards += award.getName() + "\n";
+            }
+            if(!awards.equalsIgnoreCase("")) {
+                builder.addField("\uD83C\uDFC6 Awards", awards, true);
+            }
             builder.setTimestamp(Instant.now());
             //builder.addBlankField(true);
             if(!discordUser.minecraft.uuid.equalsIgnoreCase("")) {
