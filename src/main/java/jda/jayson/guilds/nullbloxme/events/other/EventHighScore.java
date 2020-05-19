@@ -34,6 +34,7 @@ public class EventHighScore {
         remover.put(e.getAuthor().getIdLong(), discordUser.points);
         points.put(discordUser.points, e.getAuthor().getIdLong());
         sorted.add(discordUser.points);
+        System.out.println(sorted);
         //BotCMD.save();
         Collections.sort(sorted);
         Collections.reverse(sorted);

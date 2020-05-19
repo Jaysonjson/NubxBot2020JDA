@@ -52,13 +52,11 @@ public class HighScoreNew {
     public static void updateHighscore(MessageReceivedEvent e) {
         points.clear();
         sorted.clear();
-        User user = e.getAuthor();
-        Long user_id = user.getIdLong();
-        DiscordUser discordUser = JSON.loadUser(user_id);
         List<File> files = (List<File>) FileUtils.listFiles(new File("bot/users"), new String[]{"json"}, true);
         for (File file : files) {
             String filename = file.getName();
             filename = filename.replaceAll(".json","");
+            DiscordUser discordUser = JSON.loadUser(filename);
             String user_name;
             try {
                 user_name = e.getGuild().getMemberById(filename).getUser().getName();
@@ -73,10 +71,10 @@ public class HighScoreNew {
                 Nubx.logger_json.error(ec);
                 ec.printStackTrace();
             }
-            if(discordUser.points != 0 && !filename.equalsIgnoreCase("" + Users.Jayson_json) && !filename.equals("" + Users.Keksefreak) && !filename.equals("" + Users.Jayson_Alt) && !filename.equals("" + Users.Jayson_Alt1) && !filename.equals("" + Users.Test_Bot) && !filename.equals("" + Users.Nubx)) {
-                if (remover.containsKey(user)) {
-                    points.remove(remover.get(user));
-                    sorted.remove(remover.get(user));
+            if(discordUser.points != 0 && !filename.equalsIgnoreCase("f" + Users.Jayson_json) && !filename.equals("" + Users.Keksefreak) && !filename.equals("" + Users.Jayson_Alt) && !filename.equals("" + Users.Jayson_Alt1) && !filename.equals("" + Users.Test_Bot) && !filename.equals("" + Users.Nubx)) {
+                if (remover.containsKey(user_name)) {
+                    points.remove(remover.get(user_name));
+                    sorted.remove(remover.get(user_name));
                 }
                 remover.put(user_name, discordUser.points);
                 points.put(discordUser.points, user_name);
@@ -100,7 +98,7 @@ public class HighScoreNew {
             } catch (NullPointerException e1) {
             }
             if (user_name != null && !user_name.equalsIgnoreCase("nullpointer_catch")) {
-                s.append("\n").append(num).append(": (").append(References.formatInteger(sorted.get(i))).append(")  ").append(user);
+                s.append("\n").append(num).append(": (").append(References.formatInteger(sorted.get(i))).append(")  ").append(user_name);
             }
             if (i == 26) {
                 break;
